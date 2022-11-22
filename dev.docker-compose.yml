@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+
+  webservice:
+    container_name: dev_webapp
+    build: ./backend.docker.dev.Dockerfile
+    depends_on:
+      - database
+    environment:
+      - POSTGRES_USER=webappuser
+      - POSTGRES_PASSWORD=secretpassword
+      - POSTGRES_DB=applicationdb
+    volumes:
+      - ./backend/app/:/app/
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    ports:
+      - 8000:8000
+
+
+  database:
+    container_name: dev_db
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=webappuser
+      - POSTGRES_PASSWORD=secretpassword
+      - POSTGRES_DB=applicationdb
+    volumes:
+      - ./db_dev_volume:/var/lib/postgresql/data
