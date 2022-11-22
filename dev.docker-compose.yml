@@ -4,7 +4,9 @@ services:
 
   webservice:
     container_name: dev_webapp
-    build: ./backend.docker.dev.Dockerfile
+    build:
+      context: ./backend
+      dockerfile: ./docker/dev.Dockerfile
     depends_on:
       - database
     environment:
@@ -16,7 +18,6 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --reload
     ports:
       - 8000:8000
-
 
   database:
     container_name: dev_db
