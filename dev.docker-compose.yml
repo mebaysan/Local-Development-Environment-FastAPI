@@ -21,7 +21,7 @@ services:
   database:
     container_name: dev_db
     image: postgres
-    restart: always
+    restart: on-failure
     environment:
       - POSTGRES_USER=webappuser
       - POSTGRES_PASSWORD=secretpassword
